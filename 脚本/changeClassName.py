@@ -111,7 +111,7 @@ def pbRule(cn):
 def getClassNames(filepath):
     #读取文件名入数组
     #过滤文件夹
-    filterDirs = ["ThirdKit/","小说/"]
+    filterDirs = ["WKCrashSDK/"]
     #过滤文件
     filterFiles = []
     classNames = []
@@ -127,6 +127,9 @@ def getClassNames(filepath):
                     break
             if isFilterDir != 1:
                 if ".m" in name:
+                    #过滤main.m文件
+                    if name == "main.m":
+                        continue
                     splitNames = name.split(".m")
                     if splitNames[1] == "" or splitNames[1] == "m":
                         cn = splitNames[0]
@@ -161,7 +164,7 @@ def changePBFile(PBFilePath,classNames,prefix,suffix):
 
 
 
-def changeClassName(filepath,PBFilePath,classNameFile,prefix,suffix=""):
+def changeClassName(filepath,PBFilePath,prefix,suffix=""):
 
     # print(filepath)
     # print(PBFilePath)
@@ -171,7 +174,7 @@ def changeClassName(filepath,PBFilePath,classNameFile,prefix,suffix=""):
     #读取文件名入数组
     print("-------------------")
     print("-------获取文件名列表-----")
-    classNames = getClassNames(classNameFile)
+    classNames = getClassNames(filepath)
     print("------需修改类名数量 " + str(len(classNames)) + "-------")
     # 修改文件内容
     # 遍历filepath下所有文件，包括子目录
@@ -179,8 +182,8 @@ def changeClassName(filepath,PBFilePath,classNameFile,prefix,suffix=""):
     print("-------开始修改文件内容-----")
     for root, dirs, files in os.walk(filepath):
         for name in files:
-            ##仅仅处理 .h .m .xib .pch
-            if name.find(".pch") != -1 or name.find(".h") != -1 or name.find(".m") != -1 or name.find(".xib") != -1:
+            ##仅仅处理 .h .m .xib .pch .storyboard
+            if name.find(".pch") != -1 or name.find(".h") != -1 or name.find(".m") != -1 or name.find(".xib") != -1 or name.find(".storyboard"):
                 print("-------正在处理" + name + "-----")
                 oldFilePath = os.path.join(root, name)
                 #去掉.以及后缀
