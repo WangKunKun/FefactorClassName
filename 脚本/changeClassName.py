@@ -182,10 +182,13 @@ def changeClassName(filepath,PBFilePath,prefix,suffix=""):
     print("-------开始修改文件内容-----")
     for root, dirs, files in os.walk(filepath):
         for name in files:
+            ##过滤framework 以及 .a
+            oldFilePath = os.path.join(root, name)
+                if oldFilePath.find(".framework/") != -1 or oldFilePath.find(".a/") != -1:
+                    continue;
             ##仅仅处理 .h .m .xib .pch .storyboard
             if name.find(".pch") != -1 or name.find(".h") != -1 or name.find(".m") != -1 or name.find(".xib") != -1 or name.find(".storyboard"):
                 print("-------正在处理" + name + "-----")
-                oldFilePath = os.path.join(root, name)
                 #去掉.以及后缀
                 splitFileNameArr = name.split('.')
                 fileName = splitFileNameArr[0]
