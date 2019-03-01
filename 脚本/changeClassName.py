@@ -184,8 +184,8 @@ def changeClassName(filepath,PBFilePath,prefix,suffix=""):
         for name in files:
             ##过滤framework 以及 .a
             oldFilePath = os.path.join(root, name)
-                if oldFilePath.find(".framework/") != -1 or oldFilePath.find(".a/") != -1:
-                    continue;
+            if oldFilePath.find(".framework/") != -1 or oldFilePath.find(".a/") != -1:
+                continue;
             ##仅仅处理 .h .m .xib .pch .storyboard
             if name.find(".pch") != -1 or name.find(".h") != -1 or name.find(".m") != -1 or name.find(".xib") != -1 or name.find(".storyboard"):
                 print("-------正在处理" + name + "-----")
