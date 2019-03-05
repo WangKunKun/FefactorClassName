@@ -54,6 +54,9 @@ def rule(cn):
     rule_35 = ':' + cn + '<' #继承类名后面 直接接入协议 默认实际是不存在这个问题的  防止人为 以及修改模板
     rule_36 = '"' + cn + '_' #类取名有下划线以及数字 以及通过工厂用数字来创建的情况
     rule_37 = '"' + cn + '%' #类取名有数字 以及通过工厂用数字来创建的情况
+    rule_38 = '<' + cn + '>' #协议作为文件名  修改的可能为协议名
+    rule_39 = ',' + cn + '>' 
+    rule_40 = ' ' + cn + '>' 
 
     rules = []
     rules.append(rule_1)
@@ -93,6 +96,9 @@ def rule(cn):
     rules.append(rule_35)
     rules.append(rule_36)
     rules.append(rule_37)
+    rules.append(rule_38)
+    rules.append(rule_39)
+    rules.append(rule_40)
     return rules
 
 def pbRule(cn):
@@ -166,10 +172,6 @@ def changePBFile(PBFilePath,classNames,prefix,suffix):
 
 def changeClassName(filepath,PBFilePath,prefix,suffix=""):
 
-    # print(filepath)
-    # print(PBFilePath)
-    # print(prefix)
-    # print(suffix)
 
     #读取文件名入数组
     print("-------------------")
@@ -187,7 +189,7 @@ def changeClassName(filepath,PBFilePath,prefix,suffix=""):
             if oldFilePath.find(".framework/") != -1 or oldFilePath.find(".a/") != -1:
                 continue;
             ##仅仅处理 .h .m .xib .pch .storyboard
-            if name.find(".pch") != -1 or name.find(".h") != -1 or name.find(".m") != -1 or name.find(".xib") != -1 or name.find(".storyboard"):
+            if name.find(".pch") != -1 or name.find(".h") != -1 or name.find(".m") != -1 or name.find(".xib") != -1 or name.find(".storyboard") != -1:
                 print("-------正在处理" + name + "-----")
                 #去掉.以及后缀
                 splitFileNameArr = name.split('.')
@@ -232,6 +234,7 @@ if isNeedHelp == 0:
     argsCount = len(args)
     if argsCount < 3:
         helpInfo()
+        os._exit(0)
     else:
         filePath = args[0]
         filePathExist = os.path.exists(filePath)
